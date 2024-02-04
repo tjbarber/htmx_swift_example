@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-
-  <title>#(title)</title>
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <title>Count</title>
 </head>
 
 <body>
-  <h1>#(title)</h1>
+  #extend("count")
 </body>
 </html>
