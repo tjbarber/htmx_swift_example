@@ -7,6 +7,9 @@
 </head>
 
 <body>
-  #extend("count")
+  <div id="count">
+    #extend("count")
+  </div>
+  <button hx-target="\#count" hx-post="/count">Count</button>
 </body>
 </html>

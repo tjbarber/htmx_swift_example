@@ -1,2 +1,1 @@
 <h1>Count: #(count)</h1>
-<button hx-target="body" hx-post="/count">Count</button>
