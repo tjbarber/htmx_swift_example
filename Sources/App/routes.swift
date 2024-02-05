@@ -1,20 +1,18 @@
 import Vapor
 
-class Count {
-    var count = 0
-    
-    private init() {}
-
-    static let sharedInstance = Count()
-}
-
 func routes(_ app: Application) throws {
     app.get { req throws in
-        try req.view.render("index", ["count": Count.sharedInstance.count])
+        req.view.render("index", [
+            "contacts": ContactDataStore.sharedInstance.contacts
+        ])
     }
 
-    app.post("count") { req async throws -> View in
-       Count.sharedInstance.count += 1
-       return try await req.view.render("count", ["count": Count.sharedInstance.count])
+    app.post("contacts") { req async throws -> View in
+        let contact = try req.content.decode(Contact.self)
+        ContactDataStore.sharedInstance.add(contact)
+
+        return try await req.view.render("index", [
+            "contacts": ContactDataStore.sharedInstance.contacts
+        ])
     }
 }

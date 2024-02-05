@@ -3,13 +3,12 @@
 <head>
   <meta charset="utf-8">
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-  <title>Count</title>
+  <title>Contacts</title>
 </head>
 
 <body>
-  <div id="count">
-    #extend("count")
-  </div>
-  <button hx-target="\#count" hx-post="/count">Count</button>
+  #extend("form")
+  <hr />
+  #extend("display")
 </body>
 </html>
