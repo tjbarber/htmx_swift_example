@@ -1,9 +1,25 @@
-<form hx-post="/contacts">
+<form hx-swap="outerHTML" hx-post="/contacts">
     <label for="name">Name</label>
-    <input type="text" name="name" />
+    <input 
+      #if(contact.name):
+        value="#(contact.name)"
+      #endif
+      type="text" 
+      name="name" 
+    />
 
     <label for="email">Email</label>
-    <input type="text" name="email" />
+    <input
+      #if(contact.email):
+        value="#(contact.email)"
+      #endif
+      type="text"
+      name="email" 
+    />
+
+    #if(errorMessage):
+        <div style="color: red">#(errorMessage)</div>
+    #endif
 
     <button type="submit">Submit</button>
 </form>

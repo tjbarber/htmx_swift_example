@@ -1,5 +1,21 @@
 import Vapor 
 
+enum ContactDataStoreErrors: Error {
+    case emailNotUnique
+}
+
+extension ContactDataStoreErrors: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+            case .emailNotUnique:
+                return NSLocalizedString(
+                    "Email is not unique",
+                    comment: ""
+                )
+        }
+    }
+}
+
 class ContactDataStore {
     var contacts: [Contact]
     
@@ -12,8 +28,15 @@ class ContactDataStore {
 
     static let sharedInstance = ContactDataStore()
 
-    func add(_ contact: Contact) {
-        contacts.append(contact)
+    func add(_ newContact: Contact) throws -> Contact? {
+        for contact in contacts {
+            if contact.email == newContact.email {
+                throw ContactDataStoreErrors.emailNotUnique
+            }
+        } 
+
+        contacts.append(newContact)
+        return newContact
     }
 }
 

@@ -1,4 +1,4 @@
-<div style="display: flex; flex-direction: column">
+<div id="contacts" style="display: flex; flex-direction: column">
     #for(contact in contacts):
         <div>
             Name: <span>#(contact.name)</span>
