@@ -18,8 +18,6 @@ func routes(_ app: Application) throws {
               .encodeResponse(status: .unprocessableEntity, for: req)
         }
 
-        return try await req.view.render("contacts", [
-            "contacts": ContactDataStore.sharedInstance.contacts
-        ]).encodeResponse(for: req)
+        return try await req.view.render("oob-contact", ["contact": contact]).encodeResponse(for: req)
     }
 }

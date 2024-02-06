@@ -1,0 +1,5 @@
+#extend("form")
+
+<div id="contacts" hx-swap-oob="afterbegin">
+    #extend("contact")
+</div>

@@ -1,7 +1,7 @@
 <form hx-swap="outerHTML" hx-post="/contacts">
     <label for="name">Name</label>
     <input 
-      #if(contact.name):
+      #if(contact.name && errorMessage):
         value="#(contact.name)"
       #endif
       type="text" 
@@ -10,7 +10,7 @@
 
     <label for="email">Email</label>
     <input
-      #if(contact.email):
+      #if(contact.email && errorMessage):
         value="#(contact.email)"
       #endif
       type="text"

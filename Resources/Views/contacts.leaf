@@ -1,8 +1,5 @@
 <div id="contacts" style="display: flex; flex-direction: column">
     #for(contact in contacts):
-        <div>
-            Name: <span>#(contact.name)</span>
-            Email: <span>#(contact.email)</span>
-        </div>
+        #extend("contact")
     #endfor
 </div>
