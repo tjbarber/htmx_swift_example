@@ -46,7 +46,7 @@ class ContactDataStore {
     }
 
     func deleteContact(by id: Int) {
-        let index = contacts.firstIndex(where: { $0.id == id })!
+        guard let index = contacts.firstIndex(where: { $0.id == id }) else { return }
         contacts.remove(at: index)
     }
 }
