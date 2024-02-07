@@ -8,10 +8,11 @@ func routes(_ app: Application) throws {
     }
 
     app.post("contacts") { req async throws -> Response in
-        let contact = try req.content.decode(Contact.self)
+        var contact = try req.content.decode(Contact.self)
 
         do {
-            _ = try ContactDataStore.sharedInstance.add(contact)
+            // this is bad code but heck it
+            contact = try ContactDataStore.sharedInstance.add(contact)!
         } catch {
             return try await req.view
                 .render("form", FormViewContext(contact: contact, errorMessage: error.localizedDescription))
@@ -19,5 +20,14 @@ func routes(_ app: Application) throws {
         }
 
         return try await req.view.render("oob-contact", ["contact": contact]).encodeResponse(for: req)
+    }
+
+    app.delete("contacts", ":id") { req async throws -> Response in
+        guard let idStr = req.parameters.get("id"), let id = Int(idStr) else {
+            throw Abort(.notAcceptable)
+        }
+
+        ContactDataStore.sharedInstance.deleteContact(by: id)
+        return Response()
     }
 }

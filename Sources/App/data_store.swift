@@ -18,25 +18,36 @@ extension ContactDataStoreErrors: LocalizedError {
 
 class ContactDataStore {
     var contacts: [Contact]
+    var nextPrimaryKey: Int {
+        return contacts.count + 1
+    }
     
     private init() {
         contacts = [
-            Contact(name: "John", email: "jd@gmail.com"),
-            Contact(name: "Clara", email: "cd@gmail.com"),
+            Contact(id: 1, name: "John", email: "jd@gmail.com"),
+            Contact(id: 2, name: "Clara", email: "cd@gmail.com"),
         ]
     }
 
     static let sharedInstance = ContactDataStore()
 
-    func add(_ newContact: Contact) throws -> Contact? {
+    func add(_ passedContact: Contact) throws -> Contact? {
         for contact in contacts {
-            if contact.email == newContact.email {
+            if contact.email == passedContact.email {
                 throw ContactDataStoreErrors.emailNotUnique
             }
         } 
 
-        contacts.append(newContact)
-        return newContact
+        // this is bad code and I hate it but it is what it is so I can mock a
+        // primary key
+        let contact = Contact(id: nextPrimaryKey, name: passedContact.name, email: passedContact.email)
+        contacts.append(contact)
+        return contact
+    }
+
+    func deleteContact(by id: Int) {
+        let index = contacts.firstIndex(where: { $0.id == id })!
+        contacts.remove(at: index)
     }
 }
 
